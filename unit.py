@@ -15,7 +15,7 @@ class BaseUnit(ABC):
     Базовый класс юнита
     """
 
-    def __init__(self, name: str, unit_class: UnitClass):
+    def __init__(self, name: str, unit_class: UnitClass, weapon=None, armor=None):
         """
         При инициализации класса Unit используем свойства класса UnitClass
         """
@@ -23,27 +23,27 @@ class BaseUnit(ABC):
         self.unit_class = unit_class
         self.hp = unit_class.max_health
         self.stamina = unit_class.max_stamina
-        self.weapon = None
-        self.armor = None
+        self.weapon = weapon
+        self.armor = armor
         self._is_skill_used = False
 
     @property
-    def health_points(self):
+    def health_points(self) -> float:
         return round(self.hp, 1)
 
     @property
-    def stamina_points(self):
+    def stamina_points(self) -> float:
         return round(self.stamina, 1)
 
-    def equip_weapon(self, weapon: Weapon):
+    def equip_weapon(self, weapon: Weapon) -> str:
         """ присваиваем нашему герою новое оружие """
         self.weapon = weapon
         return f"{self.name} экипирован оружием {self.weapon.name}"
 
-    def equip_armor(self, armor: Armor):
-        # TODO одеваем новую броню
+    def equip_armor(self, armor: Armor) -> str:
+        """ одеваем новую броню """
         self.armor = armor
-        # return f"{self.name} экипирован броней {self.armor.name}"
+        return f"{self.name} экипирован броней {self.armor.name}"
 
     def _count_damage(self, target: BaseUnit) -> int:
         """
@@ -67,12 +67,13 @@ class BaseUnit(ABC):
         target.get_damage(damage)
         return damage
 
-    def get_damage(self, damage: int) -> Optional[int]:
+    def get_damage(self, damage: int) -> float:
         """ получение урона целью присваиваем новое значение для аттрибута self.hp """
         if damage >= 0 and self.hp-damage > 0:
             self.hp -=damage
         elif damage >= 0 >= self.hp - damage:
             self.hp = 0
+        return self.hp
 
 
 
@@ -109,13 +110,12 @@ class PlayerUnit(BaseUnit):
         а также возвращается результат в виде строки
         """
 
-
         if self.stamina < self.weapon.stamina_per_hit:
             return f"{self.name} попытался использовать {self.weapon.name}, но у него не хватило выносливости."
 
         damage = self._count_damage(target)
-
         if damage > 0:
+            print(self.name, type(self.name))
             return f"{self.name} используя {self.weapon.name} пробивает {target.armor.name} соперника " \
                    f"и наносит {damage} урона."
 
@@ -143,7 +143,6 @@ class EnemyUnit(BaseUnit):
             return f"{self.name} попытался использовать {self.weapon.name}, но у него не хватило выносливости."
 
         damage = self._count_damage(target)
-
         if damage > 0:
             return f"{self.name} используя {self.weapon.name} пробивает {target.armor.name} соперника " \
                    f"и наносит {damage} урона."
