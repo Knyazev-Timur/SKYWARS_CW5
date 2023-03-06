@@ -28,7 +28,7 @@ class Weapon:
 
 @dataclass
 class EquipmentData:
-    # TODO содержит 2 списка - с оружием и с броней
+    """ содержит 2 списка - с оружием и с броней """
     weapons: list[Weapon]
     armors: list[Armor]
 
@@ -39,14 +39,14 @@ class Equipment:
         self.equipment = self._get_equipment_data()
 
     def get_weapon(self, weapon_name) -> Optional[Weapon]:
-        # TODO возвращает объект оружия по имени
+        """ возвращает объект оружия по имени """
         for weapon in self.equipment.weapons:
             if weapon.name == weapon_name:
                 return weapon
         return None
 
     def get_armor(self, armor_name) -> Optional[Armor]:
-        # TODO возвращает объект брони по имени
+        """" возвращает объект брони по имени """
         for armor in self.equipment.armors:
             if armor.name == armor_name:
                 return armor
@@ -60,7 +60,7 @@ class Equipment:
 
     @staticmethod
     def _get_equipment_data() -> EquipmentData:
-        # TODO этот метод загружает json в переменную EquipmentData
+        """ этот метод загружает json в переменную EquipmentData """
         try:
             with open("./data/equipment.json", encoding="utf-8") as equipment:
                 data = json.load(equipment)

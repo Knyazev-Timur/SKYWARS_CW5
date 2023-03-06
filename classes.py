@@ -13,7 +13,7 @@ class UnitClass:
     skill: Skill
 
 
-# TODO Инициализируем экземпляр класса UnitClass и присваиваем ему необходимые значения аттрибуотов
+""" Инициализируем экземпляр класса UnitClass и присваиваем ему необходимые значения аттрибуотов """
 WarriorClass = UnitClass(
     name='Войн',
     max_health=60,
@@ -24,7 +24,6 @@ WarriorClass = UnitClass(
     skill=FuryPunch(),
 )
 
-# TODO действуем так же как и с войном
 ThiefClass = UnitClass(
     name='Вор',
     max_health=50,

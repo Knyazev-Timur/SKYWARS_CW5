@@ -73,28 +73,32 @@ class Arena(metaclass=BaseSingleton):
             return self.enemy.hit(self.player)
 
     def _end_game(self):
-        # TODO КНОПКА ЗАВЕРШЕНИЕ ИГРЫ - > return result: str
-        # TODO очищаем синглтон - self._instances = {}
-        # TODO останавливаем игру (game_is_running)
-        # TODO возвращаем результат
+        """
+        КНОПКА ЗАВЕРШЕНИЕ ИГРЫ - > return result: str
+        очищаем синглтон - self._instances = {}
+        останавливаем игру (game_is_running)
+        возвращаем результат
+        """
         self._instances = {}
         self.game_is_running = False
         return self.battle_result
 
     def player_hit(self):
-        # TODO КНОПКА УДАР ИГРОКА -> return result: str
-        # TODO получаем результат от функции self.player.hit
-        # TODO запускаем следующий ход
-        # TODO возвращаем результат удара строкой
+        """ КНОПКА УДАР ИГРОКА -> return result: str
+        получаем результат от функции self.player.hit
+        запускаем следующий ход
+        возвращаем результат удара строкой
+        """
         result = self.player.hit(self.enemy)
         turn_result = self.next_turn()
         return f'{result}<br>{turn_result}'
 
     def player_use_skill(self):
-        # TODO КНОПКА ИГРОК ИСПОЛЬЗУЕТ УМЕНИЕ
-        # TODO получаем результат от функции self.use_skill
-        # TODO включаем следующий ход
-        # TODO возвращаем результат удара строкой
+        """ КНОПКА ИГРОК ИСПОЛЬЗУЕТ УМЕНИЕ
+        получаем результат от функции self.use_skill
+        включаем следующий ход
+        возвращаем результат удара строкой
+        """
         result = self.player.use_skill(self.enemy)
         turn_result = self.next_turn()
         return f'{result}<br>{turn_result}'
