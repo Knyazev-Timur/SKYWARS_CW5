@@ -1,10 +1,7 @@
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from equipment import Equipment, Weapon, Armor
-from classes import UnitClass
 from random import randint
-from typing import Optional
-from abc import ABC, abstractmethod
 
 from classes import UnitClass
 from equipment import Armor, Weapon
@@ -69,13 +66,11 @@ class BaseUnit(ABC):
 
     def get_damage(self, damage: int) -> float:
         """ получение урона целью присваиваем новое значение для аттрибута self.hp """
-        if damage >= 0 and self.hp-damage > 0:
-            self.hp -=damage
+        if damage >= 0 and self.hp - damage > 0:
+            self.hp -= damage
         elif damage >= 0 >= self.hp - damage:
             self.hp = 0
         return self.hp
-
-
 
     @abstractmethod
     def hit(self, target: BaseUnit) -> str:
@@ -84,7 +79,7 @@ class BaseUnit(ABC):
         """
         pass
 
-    def use_skill(self, target: BaseUnit) -> str:
+    def use_skill(self, target) -> str:
         """
         метод использования умения.
         если умение уже использовано возвращаем строку
@@ -99,6 +94,7 @@ class BaseUnit(ABC):
         skill_use = self.unit_class.skill.use(self, target)
         self._is_skill_used = True
         return skill_use
+
 
 class PlayerUnit(BaseUnit):
 
@@ -115,13 +111,11 @@ class PlayerUnit(BaseUnit):
 
         damage = self._count_damage(target)
         if damage > 0:
-            print(self.name, type(self.name))
             return f"{self.name} используя {self.weapon.name} пробивает {target.armor.name} соперника " \
                    f"и наносит {damage} урона."
 
         return f"{self.name} используя {self.weapon.name} наносит удар, " \
                f"но {target.armor.name} cоперника его останавливает."
-
 
 
 class EnemyUnit(BaseUnit):

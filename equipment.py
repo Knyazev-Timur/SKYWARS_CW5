@@ -26,6 +26,7 @@ class Weapon:
     def damage(self):
         return round(uniform(self.min_damage, self.max_damage), 1)
 
+
 @dataclass
 class EquipmentData:
     """ содержит 2 списка - с оружием и с броней """

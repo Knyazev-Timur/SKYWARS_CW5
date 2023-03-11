@@ -1,5 +1,5 @@
-from unit import BaseUnit
-from typing import Optional, Any
+from typing import Optional
+
 
 
 class BaseSingleton(type):
@@ -8,20 +8,18 @@ class BaseSingleton(type):
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
             instance = super().__call__(*args, **kwargs)
-            print(instance)
-            print(type(instance))
             cls._instances[cls] = instance
         return cls._instances[cls]
 
 
 class Arena(metaclass=BaseSingleton):
     STAMINA_PER_ROUND = 1
-    player = None
-    enemy = None
+    player = NotImplemented
+    enemy = NotImplemented
     game_is_running = False
     battle_result = None
 
-    def start_game(self, player: BaseUnit, enemy: BaseUnit):
+    def start_game(self, player, enemy):
         """
         НАЧАЛО ИГРЫ -> None
         присваиваем экземпляру класса аттрибуты "игрок" и "противник"
@@ -40,14 +38,11 @@ class Arena(metaclass=BaseSingleton):
         если Здоровья игроков в порядке то ничего не происходит
         """
         if self.player.hp > 0 and self.enemy.hp > 0:
-            print(self.player, type(self.player))
             return None
 
         if self.player.hp <= 0 and self.enemy.hp <= 0:
-            print(self.player, type(self.player))
             self.battle_result = "Ничья"
         elif self.enemy.hp <= 0:
-            print(self.enemy, type(self.enemy))
             self.battle_result = "Игрок победил"
         else:
             self.battle_result = "Противник победил"
